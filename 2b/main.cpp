@@ -23,10 +23,7 @@ int encontrarCandidatos(int rainhas, vector<int> &solucao_parcial, int linha_pes
                 // diagonal a[i] - c == (i - candidato)
                 } else if(solucao_parcial[linha] - linha_pesquisada == linha - linha_pesquisada){
 
-                } else{
-
                 }
-
             }
 
         solucao_parcial[linha_pesquisada] = linha_pesquisada;
@@ -37,15 +34,15 @@ int encontrarCandidatos(int rainhas, vector<int> &solucao_parcial, int linha_pes
 
 
 
-int backtracking(int rainhas, vector<int> &solucao_parcial, int coluna_escolhida, int fim){
+int backtracking(int rainhas, vector<int> &solucao_parcial, int coluna_escolhida, int fim, int linha_pesquisada){
     if(fim == rainhas){
         return 1;
     } else if(coluna_escolhida == rainha_fixa) {
-        backtracking(rainhas, solucao_parcial, coluna_escolhida+1, fim+1);
+        backtracking(rainhas, solucao_parcial, coluna_escolhida+1, fim+1, linha_pesquisada++);
     } else {
-        int c = encontrarCandidatos(rainhas, solucao_parcial, 0);
+        int c = encontrarCandidatos(rainhas, solucao_parcial, linha_pesquisada++);
         solucao_parcial.push_back(c);
-        backtracking(rainhas, solucao_parcial, coluna_escolhida+1, fim+1);
+        backtracking(rainhas, solucao_parcial, coluna_escolhida+1, fim+1, linha_pesquisada++);
     }
 }
 
@@ -60,7 +57,7 @@ int main(){
 
 
 
-    if(backtracking(rainhas, solucao_parcial, 0, 0) ==1) {
+    if(backtracking(rainhas, solucao_parcial, 0, 0, 0) ==1) {
         imprimeCandidatos(solucao_parcial);
     }
 
